@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import coverImage from '../assets/images/hero.jpeg';
+---
+
+<Layout>
+	<main
+		class="relative min-h-[90vh] -mt-[73px] flex flex-col items-center justify-center after:content-[''] after:absolute after:inset-0 after:bg-black/50">
+		<Image
+			src={coverImage}
+			alt="Seas Quartet"
+			widths={[640, 960, 1280, 1920, 2560]}
+			sizes="100vw"
+			class="absolute inset-0 w-full h-full object-cover"
+			loading="eager"
+			fetchpriority="high"
+		/>
+		<div
+			class="relative z-10 flex flex-col items-center justify-between min-h-[90vh] py-24 px-6">
+			<p
+				class="font-accent text-sm tracking-[0.3em] text-[#F7EEE5]/60 uppercase">
+				Est. 2020
+			</p>
+			<h1
+				class="font-display italic font-semibold text-5xl md:text-9xl text-[#F7EEE5] text-center tracking-tight">
+				Seas Quartet
+			</h1>
+			<a
+				class="inline-block px-12 py-4 border border-primary text-primary font-accent text-sm tracking-widest uppercase hover:bg-primary hover:text-background-dark transition-all duration-300"
+				href="/about">
+				Explore
+			</a>
+		</div>
+	</main>
+</Layout>

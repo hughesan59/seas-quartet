@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@theme {
+	--color-primary: #c5a059;
+	--color-background-light: #f9f6f0;
+	--color-background-dark: #1a1613;
+
+	--font-display: 'Playfair Display Variable', serif;
+	--font-accent: 'Cinzel', serif;
+	--font-body: 'Montserrat Variable', sans-serif;
+
+	--radius: 2px;
+}
+
+.theme-light {
+	--color-primary: #8b6a1e;
+}
+
+body {
+	font-family: var(--font-body);
+}
+
+@layer base {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply text-balance;
+	}
+
+	p,
+	li,
+	figcaption,
+	blockquote {
+		@apply text-pretty;
+	}
+}
+
+/* Mobile navigation overlay
+   ========================================== */
+
+@media (max-width: 767px) {
+	/* With JS: hide mobile nav by default, show as full-screen overlay when open */
+	html[data-js] .nav-menu {
+		position: fixed;
+		inset: 0;
+		z-index: 50;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 2.5rem;
+		padding: 2rem;
+		margin: 0;
+		width: 100%;
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition:
+			opacity 0.4s ease,
+			visibility 0.4s ease;
+	}
+
+	/* Overlay background — dark theme */
+	html[data-js]:not(.theme-light) .nav-menu {
+		background-color: var(--color-background-dark);
+	}
+
+	/* Overlay background — light theme */
+	html[data-js].theme-light .nav-menu {
+		background-color: var(--color-background-light);
+	}
+
+	/* Open state */
+	html[data-js] .nav-menu.is-open {
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+	}
+
+	/* Remove backdrop-filter so fixed overlay is positioned relative to viewport */
+	header:has(.nav-menu.is-open) {
+		backdrop-filter: none !important;
+	}
+
+	/* Staggered link entrance */
+	html[data-js] .nav-menu .nav-menu-link {
+		opacity: 0;
+		transform: translateY(1rem);
+		transition:
+			opacity 0.3s ease,
+			transform 0.3s ease;
+	}
+
+	html[data-js] .nav-menu.is-open .nav-menu-link {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	html[data-js] .nav-menu.is-open li:nth-child(1) .nav-menu-link {
+		transition-delay: 0.05s;
+	}
+	html[data-js] .nav-menu.is-open li:nth-child(2) .nav-menu-link {
+		transition-delay: 0.1s;
+	}
+	html[data-js] .nav-menu.is-open li:nth-child(3) .nav-menu-link {
+		transition-delay: 0.15s;
+	}
+	html[data-js] .nav-menu.is-open li:nth-child(4) .nav-menu-link {
+		transition-delay: 0.2s;
+	}
+
+	/* Bump up link size and tap targets in the overlay */
+	html[data-js] .nav-menu .nav-menu-link {
+		display: block;
+		font-size: 1rem;
+		letter-spacing: 0.2em;
+		padding: 0.75rem 1.5rem;
+	}
+}
+
+/* Hamburger icon → X animation
+   ========================================== */
+
+.menu-icon line {
+	transition:
+		transform 0.3s ease,
+		opacity 0.3s ease;
+	transform-origin: center;
+}
+
+[aria-expanded='true'] .menu-icon-top {
+	transform: rotate(45deg) translateY(6px);
+}
+
+[aria-expanded='true'] .menu-icon-mid {
+	opacity: 0;
+}
+
+[aria-expanded='true'] .menu-icon-bot {
+	transform: rotate(-45deg) translateY(-6px);
+}
+
+/* Gold focus ring for form controls
+   ========================================== */
+
+@utility gold-border-focus {
+	&:focus {
+		border-color: var(--color-primary);
+		outline: none;
+		box-shadow: 0 0 0 1px var(--color-primary);
+	}
+}
+
+/* Respect reduced-motion preference
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+	.nav-menu,
+	.nav-menu .nav-menu-link,
+	.menu-icon line {
+		transition: none !important;
+	}
+}

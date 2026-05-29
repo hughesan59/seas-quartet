@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import siteData from '../data/site.json';
+
+const { contact } = siteData;
+---
+
+<Layout title="Contact" description="Get in touch to book Seas Quartet for your wedding, corporate function, private party, or recording session." theme="light" showBookingCta={false}>
+	<main class="flex-grow flex flex-col items-center justify-center py-20 px-4">
+		<div class="max-w-2xl w-full text-center mb-12">
+			<p
+				class="font-accent text-sm tracking-[0.3em] text-primary mb-4 uppercase">
+				Contact
+			</p>
+			<h1 class="font-display italic text-4xl md:text-6xl text-stone-900 mb-2">
+				{contact.heading}
+			</h1>
+			<p class="font-display italic text-2xl md:text-3xl text-primary mt-6">
+				{contact.subheading}
+			</p>
+		</div>
+		<form class="max-w-2xl w-full space-y-8">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div class="space-y-2">
+					<label
+						class="block font-accent text-[10px] tracking-[0.3em] text-stone-400 uppercase"
+						for="full-name">
+						Full Name
+					</label>
+					<input
+						class="w-full bg-transparent border-stone-300 gold-border-focus text-stone-800 py-3 px-4 placeholder:text-stone-300 transition-colors"
+						id="full-name"
+						placeholder="Your full name"
+						type="text"
+					/>
+				</div>
+				<div class="space-y-2">
+					<label
+						class="block font-accent text-[10px] tracking-[0.3em] text-stone-400 uppercase"
+						for="email">
+						Email Address
+					</label>
+					<input
+						class="w-full bg-transparent border-stone-300 gold-border-focus text-stone-800 py-3 px-4 placeholder:text-stone-300 transition-colors"
+						id="email"
+						placeholder="your@email.com"
+						type="email"
+					/>
+				</div>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div class="space-y-2">
+					<label
+						class="block font-accent text-[10px] tracking-[0.3em] text-stone-400 uppercase"
+						for="event-date">
+						Event Date
+					</label>
+					<div class="relative">
+						<input
+							class="w-full bg-transparent border-stone-300 gold-border-focus text-stone-800 py-3 px-10 placeholder:text-stone-300 transition-colors"
+							id="event-date"
+							placeholder="DD/MM/YY"
+							type="text"
+						/>
+						<svg
+							class="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 size-4"
+							fill="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true">
+							<path
+								d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z">
+							</path>
+						</svg>
+					</div>
+				</div>
+				<div class="space-y-2">
+					<label
+						class="block font-accent text-[10px] tracking-[0.3em] text-stone-400 uppercase"
+						for="venue">
+						Venue
+					</label>
+					<input
+						class="w-full bg-transparent border-stone-300 gold-border-focus text-stone-800 py-3 px-4 placeholder:text-stone-300 transition-colors"
+						id="venue"
+						placeholder="Venue name or location"
+						type="text"
+					/>
+				</div>
+			</div>
+			<div class="space-y-2">
+				<label
+					class="block font-accent text-[10px] tracking-[0.3em] text-stone-400 uppercase"
+					for="event-type">
+					Event Type
+				</label>
+				<select
+					class="w-full bg-transparent border-stone-300 gold-border-focus text-stone-800 py-3 px-4 transition-colors appearance-none"
+					id="event-type">
+					<option disabled selected value="">Select event type</option>
+					{
+						contact.eventTypes.map((type) => (
+							<option value={type.value}>{type.label}</option>
+						))
+					}
+				</select>
+			</div>
+			<div class="space-y-2">
+				<label
+					class="block font-accent text-[10px] tracking-[0.3em] text-stone-400 uppercase"
+					for="additional">
+					Additional
+				</label>
+				<textarea
+					class="w-full bg-transparent border-stone-300 gold-border-focus text-stone-800 py-3 px-4 placeholder:text-stone-300 transition-colors resize-none"
+					id="additional"
+					placeholder="Tell us about the atmosphere you'd like to create"
+					rows="4">
+				</textarea>
+			</div>
+			<div class="flex justify-center pt-4">
+				<button
+					class="border border-primary/40 hover:border-primary px-12 py-4 text-sm font-accent tracking-widest text-primary hover:bg-primary/5 transition-all duration-300 uppercase"
+					type="submit">
+					Send enquiry
+				</button>
+			</div>
+		</form>
+	</main>
+</Layout>

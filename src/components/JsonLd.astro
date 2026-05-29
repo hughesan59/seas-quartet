@@ -1,0 +1,43 @@
+---
+import { getEntry } from 'astro:content';
+import siteData from '../data/site.json';
+
+const sdEntry = await getEntry('structuredData', 'structured-data');
+const aboutEntry = await getEntry('about', 'about');
+const socialsEntry = await getEntry('socials', 'socials');
+
+if (!sdEntry || !aboutEntry || !socialsEntry) return;
+
+const siteUrl = Astro.site?.origin ?? 'https://seasquartet.com';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'MusicGroup',
+	name: siteData.title,
+	url: siteUrl,
+	description: sdEntry.data.description,
+	foundingDate: sdEntry.data.foundingDate,
+	genre: sdEntry.data.genres,
+	image: `${siteUrl}${sdEntry.data.image}`,
+	areaServed: sdEntry.data.areaServed,
+	member: aboutEntry.data.members.map((m) => ({
+		'@type': 'Person',
+		name: m.name,
+		roleName: m.instrument,
+	})),
+	sameAs: socialsEntry.data.links
+		.filter((link) => link.href)
+		.map((link) => link.href),
+	...(sdEntry.data.email && {
+		contactPoint: {
+			'@type': 'ContactPoint',
+			contactType: 'booking',
+			email: sdEntry.data.email,
+			...(sdEntry.data.telephone && { telephone: sdEntry.data.telephone }),
+			url: `${siteUrl}/contact`,
+		},
+	}),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

@@ -1,0 +1,31 @@
+{
+	"name": "seas-quartet",
+	"type": "module",
+	"version": "1.0.0",
+	"private": true,
+	"engines": {
+		"node": ">=22.12.0"
+	},
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"format": "prettier --write .",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/sitemap": "^3.7.3",
+		"@fontsource-variable/montserrat": "^5.2.8",
+		"@fontsource-variable/playfair-display": "^5.2.8",
+		"@fontsource/cinzel": "^5.2.8",
+		"@tailwindcss/forms": "^0.5.11",
+		"@tailwindcss/postcss": "^4.3.0",
+		"@tailwindcss/typography": "^0.5.19",
+		"astro": "^6.4.1",
+		"tailwindcss": "^4.3.0"
+	},
+	"devDependencies": {
+		"prettier": "^3.8.3",
+		"prettier-plugin-astro": "^0.14.1"
+	}
+}

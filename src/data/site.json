@@ -1,0 +1,26 @@
+{
+	"title": "Seas Quartet",
+	"tagline": "Elegant String Quartet for Events",
+	"description": "Seas Quartet is a professional string quartet available for weddings, corporate functions, and private events.",
+	"navigation": [
+		{ "label": "Home", "href": "/" },
+		{ "label": "About", "href": "/about" },
+		{ "label": "Repertoire", "href": "/repertoire" },
+		{ "label": "Contact", "href": "/contact" }
+	],
+	"footer": {
+		"ctaHeading": "Planning an event?",
+		"ctaButtonText": "Book the Quartet",
+		"ctaButtonHref": "/contact"
+	},
+	"contact": {
+		"heading": "Book the Quartet",
+		"subheading": "Enquire for your Event",
+		"eventTypes": [
+			{ "value": "wedding", "label": "Wedding Ceremony" },
+			{ "value": "corporate", "label": "Corporate Function" },
+			{ "value": "private", "label": "Private Party" },
+			{ "value": "recording", "label": "Session / Recording" }
+		]
+	}
+}

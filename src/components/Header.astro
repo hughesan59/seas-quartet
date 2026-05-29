@@ -1,0 +1,104 @@
+---
+import siteData from '../data/site.json';
+import mobileMenuScript from '../scripts/mobile-menu.js?raw';
+import { withBase } from '../utils/base';
+
+interface Props {
+	isLight?: boolean;
+}
+
+const { isLight = false } = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const root = withBase('/').replace(/\/+$/, '') || '/';
+const navLinks = siteData.navigation;
+
+function isActive(href: string) {
+	const fullPath = withBase(href).replace(/\/+$/, '') || '/';
+	return (
+		pathname === fullPath ||
+		(fullPath !== root && pathname.startsWith(fullPath + '/'))
+	);
+}
+
+function navLinkClasses(href: string) {
+	const active = isActive(href);
+	const base =
+		'font-accent text-sm tracking-widest uppercase transition-colors duration-300';
+	if (isLight) {
+		return active
+			? `${base} text-primary underline underline-offset-4 decoration-1`
+			: `${base} text-primary hover:underline hover:underline-offset-4 hover:decoration-1`;
+	}
+	return active
+		? `${base} text-primary underline underline-offset-4 decoration-1`
+		: `${base} text-stone-400 hover:text-primary`;
+}
+---
+
+<header
+	class:list={[
+		'border-b py-6 px-6 lg:px-12 sticky top-0 z-50',
+		isLight
+			? 'border-primary/20 bg-background-light'
+			: 'border-primary/10 bg-background-dark/75 backdrop-blur-sm',
+	]}>
+	<nav
+		class:list={[
+			'max-w-7xl mx-auto flex flex-wrap justify-between',
+			isLight ? 'items-baseline' : 'items-center',
+		]}>
+		<a
+			href={withBase('/')}
+			class="font-accent text-primary text-xl tracking-[0.2em] font-medium uppercase no-underline">
+			{siteData.title}
+		</a>
+
+		<button
+			id="menu-toggle"
+			class="md:hidden text-primary p-2 -my-2 -mr-2 relative z-[60] cursor-pointer self-center"
+			type="button"
+			hidden
+			aria-expanded="false"
+			aria-controls="nav-menu"
+			aria-label="Open menu">
+			<svg
+				class="menu-icon"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round">
+				<line class="menu-icon-top" x1="4" y1="6" x2="20" y2="6"></line>
+				<line class="menu-icon-mid" x1="4" y1="12" x2="20" y2="12"></line>
+				<line class="menu-icon-bot" x1="4" y1="18" x2="20" y2="18"></line>
+			</svg>
+		</button>
+
+		<ul
+			id="nav-menu"
+			class:list={[
+				'nav-menu',
+				'flex flex-col md:flex-row',
+				'w-full md:w-auto',
+				'md:items-center md:space-x-10',
+				'mt-4 md:mt-0',
+				'space-y-3 md:space-y-0',
+				'list-none p-0 m-0',
+			]}>
+			{
+				navLinks.map(({ label, href }) => (
+					<li>
+						<a class:list={[navLinkClasses(href), 'nav-menu-link']} href={withBase(href)}>
+							{label}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</nav>
+</header>
+
+<script is:inline set:html={mobileMenuScript} />

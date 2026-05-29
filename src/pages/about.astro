@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry, render } from 'astro:content';
+
+const aboutEntry = await getEntry('about', 'about');
+const { Content } = await render(aboutEntry);
+const { heading, subtitle, members } = aboutEntry.data;
+---
+
+<Layout title="About" description="Meet the musicians of Seas Quartet — four London-based friends bringing elegant chamber music to weddings and events across the UK.">
+	<main class="flex-grow flex flex-col items-center justify-center py-20 px-6">
+		<div class="max-w-3xl w-full text-center space-y-12">
+			<p
+				class="font-accent text-sm tracking-[0.3em] text-primary mb-4 uppercase">
+				{subtitle}
+			</p>
+			<h1 class="font-display italic text-4xl md:text-6xl text-stone-100">
+				{heading}
+			</h1>
+			<div
+				class="space-y-6 text-stone-300 leading-relaxed font-light text-lg prose prose-invert prose-lg mx-auto">
+				<Content />
+			</div>
+			<h2 class="sr-only">Members</h2>
+			<ul
+				class="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8 pt-12 border-t border-primary/10 list-none p-0 m-0">
+				{
+					members.map((member) => (
+						<li class="text-center">
+							<p class="font-accent text-[10px] tracking-[0.3em] text-primary mb-2 uppercase">
+								{member.instrument}
+								<span class="sr-only">:</span>
+							</p>
+							<p class="font-display italic text-2xl text-stone-200">
+								{member.name}
+							</p>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</main>
+</Layout>
