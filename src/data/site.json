@@ -12,15 +12,5 @@
 		"ctaHeading": "Planning an event?",
 		"ctaButtonText": "Book the Quartet",
 		"ctaButtonHref": "/contact/"
-	},
-	"contact": {
-		"heading": "Book the Quartet",
-		"subheading": "Enquire for your Event",
-		"eventTypes": [
-			{ "value": "wedding", "label": "Wedding Ceremony" },
-			{ "value": "corporate", "label": "Corporate Function" },
-			{ "value": "private", "label": "Private Party" },
-			{ "value": "recording", "label": "Session / Recording" }
-		]
 	}
 }

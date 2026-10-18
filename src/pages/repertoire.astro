@@ -30,7 +30,12 @@ const { heading, subtitle, note, categories } = repEntry.data;
 						{category.pieces.map((piece) => (
 							<li class="border-b border-primary/20 last:border-b-0 py-4 px-2">
 								<p class="text-sm md:text-base tracking-wide">
-									<span class="font-semibold">{piece.composer}</span> &middot;{' '}
+									<span class="font-semibold">{piece.composer}</span>
+									<span class="sr-only">{': '}</span>
+									<span
+										class="diamond relative -top-[0.1em] align-middle mx-2"
+										aria-hidden="true"
+									/>
 									{piece.title}
 								</p>
 							</li>

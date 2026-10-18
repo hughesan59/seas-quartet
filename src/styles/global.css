@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 
-@plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 @theme {
 	--color-primary: #c5a059;
@@ -188,14 +187,15 @@ body {
 	transform: rotate(-45deg) translateY(-6px);
 }
 
-/* Gold focus ring for form controls */
+/* Small gold diamond, used as a list marker and separator */
 
-@utility gold-border-focus {
-	&:focus {
-		border-color: var(--color-primary);
-		outline: none;
-		box-shadow: 0 0 0 1px var(--color-primary);
-	}
+@utility diamond {
+	display: inline-block;
+	flex-shrink: 0;
+	width: --spacing(1);
+	height: --spacing(1);
+	rotate: 45deg;
+	background-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

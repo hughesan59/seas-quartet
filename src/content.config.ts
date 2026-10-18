@@ -58,9 +58,27 @@ const structuredData = defineCollection({
 			genres: z.array(z.string()),
 			image: image(),
 			areaServed: z.string(),
-			email: z.email().optional(),
-			telephone: z.string().optional(),
 		}),
 });
 
-export const collections = { about, repertoire, socials, structuredData };
+const contact = defineCollection({
+	loader: glob({ pattern: 'contact.md', base: './src/content' }),
+	schema: z.object({
+		heading: z.string(),
+		subtitle: z.string(),
+		subheading: z.string(),
+		email: z.email(),
+		intro: z.string(),
+		details: z.array(z.string()).min(1),
+		buttonText: z.string(),
+		emailPrompt: z.string(),
+	}),
+});
+
+export const collections = {
+	about,
+	repertoire,
+	socials,
+	structuredData,
+	contact,
+};

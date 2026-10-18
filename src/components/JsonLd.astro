@@ -7,6 +7,7 @@ import { withBase } from '../utils/base';
 const sdEntry = await getEntry('structuredData', 'structured-data');
 const aboutEntry = await getEntry('about', 'about');
 const socialsEntry = await getEntry('socials', 'socials');
+const contactEntry = await getEntry('contact', 'contact');
 
 const absoluteUrl = (path: string) => new URL(path, Astro.site).href;
 const image = await getImage({ src: sdEntry.data.image, format: 'jpg' });
@@ -29,15 +30,12 @@ const jsonLd = {
 	sameAs: socialsEntry.data.links
 		.filter((link) => link.href)
 		.map((link) => link.href),
-	...(sdEntry.data.email && {
-		contactPoint: {
-			'@type': 'ContactPoint',
-			contactType: 'booking',
-			email: sdEntry.data.email,
-			...(sdEntry.data.telephone && { telephone: sdEntry.data.telephone }),
-			url: absoluteUrl(withBase('/contact/')),
-		},
-	}),
+	contactPoint: {
+		'@type': 'ContactPoint',
+		contactType: 'booking',
+		email: contactEntry.data.email,
+		url: absoluteUrl(withBase('/contact/')),
+	},
 };
 ---
 
