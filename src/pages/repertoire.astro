@@ -1,19 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getEntry } from 'astro:content';
+import { getSingle } from '../utils/content';
 
-const repEntry = await getEntry('repertoire', 'repertoire');
-const { heading, subtitle, note, categories } = repEntry.data;
+const { pageTitle, pageDescription, label, heading, note, categories } = (
+	await getSingle('repertoire')
+).data;
 ---
 
-<Layout
-	title="Repertoire"
-	description="Browse the Seas Quartet repertoire — from classical masterworks to contemporary favourites for weddings, parties, and corporate events."
-	theme="light">
+<Layout title={pageTitle} description={pageDescription} theme="light">
 	<main class="max-w-4xl mx-auto px-6 py-20 text-center">
 		<div class="mb-16">
 			<p class="font-accent text-sm tracking-[0.3em] text-primary mb-4 uppercase">
-				{subtitle}
+				{label}
 			</p>
 			<h1 class="font-display italic text-4xl md:text-6xl text-stone-900 mb-6">
 				{heading}

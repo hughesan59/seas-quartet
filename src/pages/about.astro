@@ -1,19 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getEntry, render } from 'astro:content';
+import { render } from 'astro:content';
+import { getSingle } from '../utils/content';
 
-const aboutEntry = await getEntry('about', 'about');
+const aboutEntry = await getSingle('about');
 const { Content } = await render(aboutEntry);
-const { heading, subtitle, members } = aboutEntry.data;
+const { pageTitle, pageDescription, label, heading, members } = aboutEntry.data;
 ---
 
-<Layout
-	title="About"
-	description="Meet the musicians of Seas Quartet — four London-based friends bringing elegant chamber music to weddings and events across the UK.">
+<Layout title={pageTitle} description={pageDescription}>
 	<main class="flex-grow flex flex-col items-center justify-center py-20 px-6">
 		<div class="max-w-3xl w-full text-center space-y-12">
 			<p class="font-accent text-sm tracking-[0.3em] text-primary mb-4 uppercase">
-				{subtitle}
+				{label}
 			</p>
 			<h1 class="font-display italic text-4xl md:text-6xl text-stone-100">
 				{heading}

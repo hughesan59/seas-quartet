@@ -6,6 +6,12 @@
 			"options": {
 				"parser": "astro"
 			}
+		},
+		{
+			"files": "src/content/**/*.md",
+			"options": {
+				"singleQuote": false
+			}
 		}
 	],
 	"useTabs": true,

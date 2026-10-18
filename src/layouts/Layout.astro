@@ -1,11 +1,11 @@
 ---
-import { Font } from 'astro:assets';
+import { getSingle } from '../utils/content';
+import { Font, getImage } from 'astro:assets';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
-import siteData from '../data/site.json';
-import { withBase } from '../utils/base';
+import { absoluteUrl, withBase } from '../utils/base';
 
 interface Props {
 	title?: string;
@@ -20,15 +20,27 @@ const {
 	theme = 'dark',
 	showBookingCta = true,
 } = Astro.props;
+const settings = (await getSingle('settings')).data;
 const pageTitle = title
-	? `${title} | ${siteData.title}`
-	: `${siteData.title} - ${siteData.tagline}`;
-const pageDescription = description || siteData.description;
+	? `${title} | ${settings.title}`
+	: `${settings.title} - ${settings.tagline}`;
+const pageDescription = description || settings.description;
 const isLight = theme === 'light';
+
+const canonicalUrl = absoluteUrl(Astro.url.pathname);
+// Link-preview scrapers expect a 1.91:1 JPEG; AVIF/WebP aren't reliably read.
+const shareImage = await getImage({
+	src: settings.sharePhoto,
+	width: 1200,
+	height: 630,
+	fit: 'cover',
+	format: 'jpg',
+});
+const shareImageUrl = absoluteUrl(shareImage.src);
 ---
 
 <!doctype html>
-<html lang="en" class:list={[isLight && 'theme-light']}>
+<html lang="en-GB" class:list={[isLight && 'theme-light']}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,11 +51,26 @@ const isLight = theme === 'light';
 		<meta name="robots" content="noindex" />
 
 		<meta name="description" content={pageDescription} />
+		<link rel="canonical" href={canonicalUrl} />
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={pageDescription} />
 		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:site_name" content={settings.title} />
+		<meta property="og:locale" content="en_GB" />
+		<meta property="og:image" content={shareImageUrl} />
+		<meta
+			property="og:image:width"
+			content={String(shareImage.attributes.width)}
+		/>
+		<meta
+			property="og:image:height"
+			content={String(shareImage.attributes.height)}
+		/>
+		<meta property="og:image:alt" content={settings.sharePhotoAlt} />
+		<meta name="twitter:card" content="summary_large_image" />
 		<title>{pageTitle}</title>
-		<JsonLd />
+		<JsonLd image={shareImageUrl} />
 		<script is:inline>
 			document.documentElement.setAttribute('data-js', '');
 		</script>

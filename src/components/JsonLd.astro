@@ -1,39 +1,39 @@
 ---
-import { getEntry } from 'astro:content';
-import { getImage } from 'astro:assets';
-import siteData from '../data/site.json';
-import { withBase } from '../utils/base';
+import { getSingle } from '../utils/content';
+import { absoluteUrl, withBase } from '../utils/base';
+import { socialLinks } from '../utils/socials';
 
-const sdEntry = await getEntry('structuredData', 'structured-data');
-const aboutEntry = await getEntry('about', 'about');
-const socialsEntry = await getEntry('socials', 'socials');
-const contactEntry = await getEntry('contact', 'contact');
+interface Props {
+	/** Absolute URL of the share photo, which Layout also uses for `og:image`. */
+	image: string;
+}
 
-const absoluteUrl = (path: string) => new URL(path, Astro.site).href;
-const image = await getImage({ src: sdEntry.data.image, format: 'jpg' });
+const { image } = Astro.props;
+
+const settings = (await getSingle('settings')).data;
+const about = (await getSingle('about')).data;
+const contact = (await getSingle('contact')).data;
 
 const jsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'MusicGroup',
-	name: siteData.title,
+	name: settings.title,
 	url: absoluteUrl(withBase('/')),
-	description: sdEntry.data.description,
-	foundingDate: sdEntry.data.foundingDate,
-	genre: sdEntry.data.genres,
-	image: absoluteUrl(image.src),
-	areaServed: sdEntry.data.areaServed,
-	member: aboutEntry.data.members.map((m) => ({
+	description: settings.description,
+	foundingDate: String(settings.foundingYear),
+	genre: settings.genres,
+	image,
+	areaServed: settings.areaServed,
+	member: about.members.map((m) => ({
 		'@type': 'Person',
 		name: m.name,
 		roleName: m.instrument,
 	})),
-	sameAs: socialsEntry.data.links
-		.filter((link) => link.href)
-		.map((link) => link.href),
+	sameAs: socialLinks(settings).map((link) => link.href),
 	contactPoint: {
 		'@type': 'ContactPoint',
 		contactType: 'booking',
-		email: contactEntry.data.email,
+		email: contact.email,
 		url: absoluteUrl(withBase('/contact/')),
 	},
 };

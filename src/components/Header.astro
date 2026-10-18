@@ -1,5 +1,5 @@
 ---
-import siteData from '../data/site.json';
+import { getSingle } from '../utils/content';
 import mobileMenuScript from '../scripts/mobile-menu.js?raw';
 import { withBase } from '../utils/base';
 
@@ -10,7 +10,15 @@ interface Props {
 const { isLight = false } = Astro.props;
 
 const { pathname } = Astro.url;
-const navLinks = siteData.navigation;
+const { title } = (await getSingle('settings')).data;
+
+// Adding a page needs code anyway, so the nav lives here rather than in src/content/.
+const navLinks = [
+	{ label: 'Home', href: '/' },
+	{ label: 'About', href: '/about/' },
+	{ label: 'Repertoire', href: '/repertoire/' },
+	{ label: 'Contact', href: '/contact/' },
+];
 
 // `trailingSlash: 'always'` means paths and hrefs both end in `/`.
 function isActive(href: string) {
@@ -44,7 +52,7 @@ function navLinkClasses(href: string) {
 		<a
 			href={withBase('/')}
 			class="font-accent text-primary text-xl tracking-[0.2em] font-medium uppercase no-underline">
-			{siteData.title}
+			{title}
 		</a>
 
 		<button

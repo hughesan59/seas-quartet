@@ -1,21 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getEntry } from 'astro:content';
+import { getSingle } from '../utils/content';
 
-const contactEntry = await getEntry('contact', 'contact');
-const contact = contactEntry.data;
+const contact = (await getSingle('contact')).data;
 const mailto = `mailto:${contact.email}`;
 ---
 
 <Layout
-	title="Contact"
-	description="Get in touch to book Seas Quartet for your wedding, corporate function, private party, or recording session."
+	title={contact.pageTitle}
+	description={contact.pageDescription}
 	theme="light"
 	showBookingCta={false}>
 	<main class="flex-grow flex flex-col items-center py-20 px-6">
 		<div class="max-w-2xl w-full text-center mb-12">
 			<p class="font-accent text-sm tracking-[0.3em] text-primary mb-4 uppercase">
-				{contact.subtitle}
+				{contact.label}
 			</p>
 			<h1 class="font-display italic text-4xl md:text-6xl text-stone-900 mb-2">
 				{contact.heading}
