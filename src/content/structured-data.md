@@ -7,6 +7,6 @@ genres:
   - Classical
   - Contemporary
   - Wedding Music
-image: /images/seas-quartet.jpg
+image: ../assets/images/seas-quartet.jpg
 areaServed: London, United Kingdom
 ---

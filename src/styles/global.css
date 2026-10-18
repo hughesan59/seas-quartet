@@ -7,11 +7,10 @@
 	--color-background-light: #f9f6f0;
 	--color-background-dark: #1a1613;
 
-	--font-display: 'Playfair Display Variable', serif;
-	--font-accent: 'Cinzel', serif;
-	--font-body: 'Montserrat Variable', sans-serif;
-
-	--radius: 2px;
+	/* Font families are configured in astro.config.mjs (`fonts`) */
+	--font-display: var(--display-font);
+	--font-accent: var(--accent-font);
+	--font-body: var(--body-font);
 }
 
 .theme-light {
@@ -20,6 +19,61 @@
 
 body {
 	font-family: var(--font-body);
+}
+
+/* Fallback fonts */
+
+@font-face {
+	font-family: 'Display fallback';
+	src: local('Times New Roman Italic'), local('TimesNewRomanPS-ItalicMT');
+	font-style: italic;
+	font-weight: 100 500;
+	size-adjust: 105.3%;
+	ascent-override: 102.75%;
+	descent-override: 23.84%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Display fallback';
+	src:
+		local('Times New Roman Bold Italic'), local('TimesNewRomanPS-BoldItalicMT');
+	font-style: italic;
+	font-weight: 600 900;
+	size-adjust: 109.2%;
+	ascent-override: 99.08%;
+	descent-override: 22.99%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Accent fallback';
+	src: local('Georgia');
+	font-weight: 100 900;
+	size-adjust: 98.6%;
+	ascent-override: 98.99%;
+	descent-override: 37.73%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Body fallback';
+	src: local('Verdana');
+	font-weight: 100 500;
+	size-adjust: 98.6%;
+	ascent-override: 98.17%;
+	descent-override: 25.46%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Body fallback';
+	src: local('Verdana Bold'), local('Verdana-Bold');
+	font-weight: 600 900;
+	size-adjust: 92.4%;
+	ascent-override: 104.76%;
+	descent-override: 27.16%;
+	line-gap-override: 0%;
 }
 
 @layer base {
@@ -40,8 +94,7 @@ body {
 	}
 }
 
-/* Mobile navigation overlay
-   ========================================== */
+/* Mobile navigation overlay */
 
 @media (max-width: 767px) {
 	/* With JS: hide mobile nav by default, show as full-screen overlay when open */
@@ -57,6 +110,7 @@ body {
 		padding: 2rem;
 		margin: 0;
 		width: 100%;
+		background-color: var(--color-background-dark);
 		opacity: 0;
 		visibility: hidden;
 		pointer-events: none;
@@ -65,17 +119,10 @@ body {
 			visibility 0.4s ease;
 	}
 
-	/* Overlay background — dark theme */
-	html[data-js]:not(.theme-light) .nav-menu {
-		background-color: var(--color-background-dark);
-	}
-
-	/* Overlay background — light theme */
 	html[data-js].theme-light .nav-menu {
 		background-color: var(--color-background-light);
 	}
 
-	/* Open state */
 	html[data-js] .nav-menu.is-open {
 		opacity: 1;
 		visibility: visible;
@@ -84,11 +131,16 @@ body {
 
 	/* Remove backdrop-filter so fixed overlay is positioned relative to viewport */
 	header:has(.nav-menu.is-open) {
-		backdrop-filter: none !important;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
 	}
 
-	/* Staggered link entrance */
+	/* Larger links and tap targets, with a staggered entrance */
 	html[data-js] .nav-menu .nav-menu-link {
+		display: block;
+		font-size: 1rem;
+		letter-spacing: 0.2em;
+		padding: 0.75rem 1.5rem;
 		opacity: 0;
 		transform: translateY(1rem);
 		transition:
@@ -113,18 +165,9 @@ body {
 	html[data-js] .nav-menu.is-open li:nth-child(4) .nav-menu-link {
 		transition-delay: 0.2s;
 	}
-
-	/* Bump up link size and tap targets in the overlay */
-	html[data-js] .nav-menu .nav-menu-link {
-		display: block;
-		font-size: 1rem;
-		letter-spacing: 0.2em;
-		padding: 0.75rem 1.5rem;
-	}
 }
 
-/* Hamburger icon → X animation
-   ========================================== */
+/* Hamburger icon to X animation */
 
 .menu-icon line {
 	transition:
@@ -145,8 +188,7 @@ body {
 	transform: rotate(-45deg) translateY(-6px);
 }
 
-/* Gold focus ring for form controls
-   ========================================== */
+/* Gold focus ring for form controls */
 
 @utility gold-border-focus {
 	&:focus {
@@ -155,9 +197,6 @@ body {
 		box-shadow: 0 0 0 1px var(--color-primary);
 	}
 }
-
-/* Respect reduced-motion preference
-   ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
 	.nav-menu,

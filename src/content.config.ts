@@ -51,15 +51,16 @@ const socials = defineCollection({
 
 const structuredData = defineCollection({
 	loader: glob({ pattern: 'structured-data.md', base: './src/content' }),
-	schema: z.object({
-		description: z.string(),
-		foundingDate: z.string(),
-		genres: z.array(z.string()),
-		image: z.string(),
-		areaServed: z.string(),
-		email: z.email().optional(),
-		telephone: z.string().optional(),
-	}),
+	schema: ({ image }) =>
+		z.object({
+			description: z.string(),
+			foundingDate: z.string(),
+			genres: z.array(z.string()),
+			image: image(),
+			areaServed: z.string(),
+			email: z.email().optional(),
+			telephone: z.string().optional(),
+		}),
 });
 
 export const collections = { about, repertoire, socials, structuredData };

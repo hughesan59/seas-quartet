@@ -46,14 +46,12 @@ function initMobileMenu() {
 		}
 	});
 
-	// Close on Escape
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'Escape' && isOpen()) {
 			closeMenu();
 		}
 	});
 
-	// Close when a nav link is clicked
 	menu.querySelectorAll('a').forEach((link) => {
 		link.addEventListener('click', () => {
 			if (isOpen()) {
@@ -71,8 +69,4 @@ function initMobileMenu() {
 	});
 }
 
-// Run on initial load
 initMobileMenu();
-
-// Re-run after Astro client-side navigation (View Transitions)
-document.addEventListener('astro:after-swap', initMobileMenu);

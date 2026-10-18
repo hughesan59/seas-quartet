@@ -9,29 +9,22 @@ interface Props {
 
 const { isLight = false } = Astro.props;
 
-const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
-const root = withBase('/').replace(/\/+$/, '') || '/';
+const { pathname } = Astro.url;
 const navLinks = siteData.navigation;
 
+// `trailingSlash: 'always'` means paths and hrefs both end in `/`.
 function isActive(href: string) {
-	const fullPath = withBase(href).replace(/\/+$/, '') || '/';
-	return (
-		pathname === fullPath ||
-		(fullPath !== root && pathname.startsWith(fullPath + '/'))
-	);
+	return pathname === withBase(href);
 }
 
 function navLinkClasses(href: string) {
-	const active = isActive(href);
 	const base =
 		'font-accent text-sm tracking-widest uppercase transition-colors duration-300';
-	if (isLight) {
-		return active
-			? `${base} text-primary underline underline-offset-4 decoration-1`
-			: `${base} text-primary hover:underline hover:underline-offset-4 hover:decoration-1`;
+	if (isActive(href)) {
+		return `${base} text-primary underline underline-offset-4 decoration-1`;
 	}
-	return active
-		? `${base} text-primary underline underline-offset-4 decoration-1`
+	return isLight
+		? `${base} text-primary hover:underline hover:underline-offset-4 hover:decoration-1`
 		: `${base} text-stone-400 hover:text-primary`;
 }
 ---
@@ -88,15 +81,15 @@ function navLinkClasses(href: string) {
 				'space-y-3 md:space-y-0',
 				'list-none p-0 m-0',
 			]}>
-			{
-				navLinks.map(({ label, href }) => (
-					<li>
-						<a class:list={[navLinkClasses(href), 'nav-menu-link']} href={withBase(href)}>
-							{label}
-						</a>
-					</li>
-				))
-			}
+			{navLinks.map(({ label, href }) => (
+				<li>
+					<a
+						class:list={[navLinkClasses(href), 'nav-menu-link']}
+						href={withBase(href)}>
+						{label}
+					</a>
+				</li>
+			))}
 		</ul>
 	</nav>
 </header>

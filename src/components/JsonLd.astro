@@ -1,24 +1,25 @@
 ---
 import { getEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
 import siteData from '../data/site.json';
+import { withBase } from '../utils/base';
 
 const sdEntry = await getEntry('structuredData', 'structured-data');
 const aboutEntry = await getEntry('about', 'about');
 const socialsEntry = await getEntry('socials', 'socials');
 
-if (!sdEntry || !aboutEntry || !socialsEntry) return;
-
-const siteUrl = Astro.site?.origin ?? 'https://seasquartet.com';
+const absoluteUrl = (path: string) => new URL(path, Astro.site).href;
+const image = await getImage({ src: sdEntry.data.image, format: 'jpg' });
 
 const jsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'MusicGroup',
 	name: siteData.title,
-	url: siteUrl,
+	url: absoluteUrl(withBase('/')),
 	description: sdEntry.data.description,
 	foundingDate: sdEntry.data.foundingDate,
 	genre: sdEntry.data.genres,
-	image: `${siteUrl}${sdEntry.data.image}`,
+	image: absoluteUrl(image.src),
 	areaServed: sdEntry.data.areaServed,
 	member: aboutEntry.data.members.map((m) => ({
 		'@type': 'Person',
@@ -34,7 +35,7 @@ const jsonLd = {
 			contactType: 'booking',
 			email: sdEntry.data.email,
 			...(sdEntry.data.telephone && { telephone: sdEntry.data.telephone }),
-			url: `${siteUrl}/contact`,
+			url: absoluteUrl(withBase('/contact/')),
 		},
 	}),
 };

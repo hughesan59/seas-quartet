@@ -4,14 +4,14 @@
 	"description": "Seas Quartet is a professional string quartet available for weddings, corporate functions, and private events.",
 	"navigation": [
 		{ "label": "Home", "href": "/" },
-		{ "label": "About", "href": "/about" },
-		{ "label": "Repertoire", "href": "/repertoire" },
-		{ "label": "Contact", "href": "/contact" }
+		{ "label": "About", "href": "/about/" },
+		{ "label": "Repertoire", "href": "/repertoire/" },
+		{ "label": "Contact", "href": "/contact/" }
 	],
 	"footer": {
 		"ctaHeading": "Planning an event?",
 		"ctaButtonText": "Book the Quartet",
-		"ctaButtonHref": "/contact"
+		"ctaButtonHref": "/contact/"
 	},
 	"contact": {
 		"heading": "Book the Quartet",

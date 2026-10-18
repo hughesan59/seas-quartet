@@ -5,11 +5,14 @@ import siteData from '../data/site.json';
 const { contact } = siteData;
 ---
 
-<Layout title="Contact" description="Get in touch to book Seas Quartet for your wedding, corporate function, private party, or recording session." theme="light" showBookingCta={false}>
+<Layout
+	title="Contact"
+	description="Get in touch to book Seas Quartet for your wedding, corporate function, private party, or recording session."
+	theme="light"
+	showBookingCta={false}>
 	<main class="flex-grow flex flex-col items-center justify-center py-20 px-4">
 		<div class="max-w-2xl w-full text-center mb-12">
-			<p
-				class="font-accent text-sm tracking-[0.3em] text-primary mb-4 uppercase">
+			<p class="font-accent text-sm tracking-[0.3em] text-primary mb-4 uppercase">
 				Contact
 			</p>
 			<h1 class="font-display italic text-4xl md:text-6xl text-stone-900 mb-2">
@@ -67,9 +70,7 @@ const { contact } = siteData;
 							fill="currentColor"
 							viewBox="0 0 24 24"
 							aria-hidden="true">
-							<path
-								d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z">
-							</path>
+							<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"></path>
 						</svg>
 					</div>
 				</div>
@@ -96,12 +97,12 @@ const { contact } = siteData;
 				<select
 					class="w-full bg-transparent border-stone-300 gold-border-focus text-stone-800 py-3 px-4 transition-colors appearance-none"
 					id="event-type">
-					<option disabled selected value="">Select event type</option>
-					{
-						contact.eventTypes.map((type) => (
-							<option value={type.value}>{type.label}</option>
-						))
-					}
+					<option disabled selected value="">
+						Select event type
+					</option>
+					{contact.eventTypes.map((type) => (
+						<option value={type.value}>{type.label}</option>
+					))}
 				</select>
 			</div>
 			<div class="space-y-2">
